@@ -1,0 +1,17 @@
+Resources:
+  DynamoDbTablePerson:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: N
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      SSESpecification:
+        SSEEnabled: true
+      TableName: ${self:provider.environment.PERSON_TABLE_NAME}
+      Tags:
+        - Key: Name
+          Value: ${self:provider.environment.PERSON_TABLE_NAME}
