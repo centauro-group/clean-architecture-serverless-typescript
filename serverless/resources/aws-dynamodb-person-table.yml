@@ -12,6 +12,3 @@ Resources:
       SSESpecification:
         SSEEnabled: true
       TableName: ${self:provider.environment.PERSON_TABLE_NAME}
-      Tags:
-        - Key: Name
-          Value: ${self:provider.environment.PERSON_TABLE_NAME}

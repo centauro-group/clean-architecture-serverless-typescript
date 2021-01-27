@@ -1,0 +1,11 @@
+Resources:
+  S3BucketTablePerson:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: ${self:provider.environment.PERSON_BUCKET_NAME}
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true

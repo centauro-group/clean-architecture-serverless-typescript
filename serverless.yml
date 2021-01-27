@@ -1,5 +1,5 @@
 service:
-  name: clean-architecture-serverless-typescript
+  name: clean-architecture-typescript
 
 custom:
   webpack:
@@ -26,18 +26,31 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:PutItem
+        - dynamodb:*
+        - s3:*
       Resource:
         - { 'Fn::GetAtt': ['DynamoDbTablePerson', 'Arn'] }
-        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:provider.environment.PERSON_TABLE_NAME}
+        - { 'Fn::GetAtt': ['S3BucketTablePerson', 'Arn'] }
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - Ref: S3BucketTablePerson
+              - '/*'
 
 functions:
-  hello:
-    handler: handler.hello
+  createPerson:
+    handler: src/application/createPerson.handler
     events:
       - http:
-          method: get
-          path: hello
+          method: post
+          path: createPerson
+  updatePerson:
+    handler: src/application/updatePerson.handler
+    events:
+      - http:
+          method: put
+          path: updatePerson
 
 resources:
   - ${file(serverless/resources/aws-dynamodb-person-table.yml)}
+  - ${file(serverless/resources/aws-s3-person-table.yml)}
