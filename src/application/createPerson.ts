@@ -1,12 +1,12 @@
 import { APIGatewayProxyHandler } from 'aws-lambda'
 import 'source-map-support/register'
 import createPersonUseCase from '../domain/use-cases/createPerson'
-import PersonService from '../infrastructure/services/person.service'
+import DynamoDBPersonService from '../infrastructure/services/dynamodb-person.service'
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const { person } = JSON.parse(event.body)
 
-  const personService = new PersonService()
+  const personService = new DynamoDBPersonService()
 
   const useCase = createPersonUseCase(personService)
   const result = await useCase(person)

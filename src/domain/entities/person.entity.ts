@@ -1,5 +1,5 @@
 export default interface PersonEntity {
-  id?: number
+  id?: string
   name: string
   lastName: string
   cellphone: string
