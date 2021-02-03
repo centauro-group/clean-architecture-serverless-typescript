@@ -1,5 +1,6 @@
 import PersonRepository from "../domain/repositories/person.repository";
 import DynamoDBPersonService from "../infrastructure/services/dynamodb-person.service";
+import S3PersonService from "../infrastructure/services/s3-person.service";
 
 export default class StorageFactory {
     static make(): PersonRepository {
@@ -12,7 +13,7 @@ export default class StorageFactory {
                 repository = new DynamoDBPersonService()
                 break;
             case 's3':
-                // repository = new S3PersonService()
+                repository = new S3PersonService()
                 break;
         }
 
